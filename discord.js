@@ -1,24 +1,19 @@
 const Discord = require('discord.js');
 const clientDiscord = new Discord.Client();
 
-function startDiscord() {
+function startDiscord(configValue) {
   clientDiscord.on('ready', () => {
     console.log('Yukari Discord bot is ready');
-    //   clientDiscord.channels.cache
-    //     .get('894634396714434625')
-    //     .send(`HI! Yukati Takeba AI is ready!`);
   });
 
-  clientDiscord.login(
-    'MTI1NjA2NDAzMDM2ODMzMzk2OA.Ggc1sn.gsQ0dDYnggbk1nSw2AnNafftMQmVJ7UcHS0wxc'
-  );
+  clientDiscord.login(configValue.DISCORD_TOKEN);
 
   return clientDiscord;
 }
 
 exports.startDiscord = startDiscord;
 
-exports.handleMessage = (sendMessage) =>
+exports.handleMessage = (character) =>
   clientDiscord.on('message', (message) => {
     if (message.mentions.users.length === 0) {
       return;
@@ -31,10 +26,12 @@ exports.handleMessage = (sendMessage) =>
     if (!bestWaifuMentioned) {
       return;
     }
-
-    sendMessage(message.content);
+    const messageID = message.channel.id;
+    character.sendMessage(message.content); //TODO send messageID to character for her to response to the right channel
   });
 
-exports.sendMessage = (message) => {
+exports.sendMessage = (message, channelID) => {
+  //TODO add channelID as a respond to message
+  // if (!channelID) return;
   clientDiscord.channels.cache.get('894634396714434625').send(message);
 };

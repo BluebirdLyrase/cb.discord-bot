@@ -1,7 +1,10 @@
+const config = require('./config');
 const discord = require('./discord');
 const character = require('./character');
 
-discord.startDiscord();
-character.startCharacter();
-character.handleMessage(discord.sendMessage);
-discord.handleMessage(character.sendMessage);
+const configValue = config.getConfigValue();
+
+discord.startDiscord(configValue);
+character.startCharacter(configValue);
+character.handleMessage(discord);
+discord.handleMessage(character);

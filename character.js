@@ -1,14 +1,8 @@
 const WebSocket = require('ws');
-const clientCharacter = new WebSocket(
-  'ws://localhost:8765/4RlcjXBqsQTwbXOa0f80STHIHuPOhXICtZAf9mgRSc4'
-);
+let clientCharacter = null;
 
-exports.handleMessage = (sendMessage) =>
-  clientCharacter.on('message', function (data) {
-    sendMessage(data);
-  });
-
-exports.startCharacter = () => {
+exports.startCharacter = (configValue) => {
+  clientCharacter = new WebSocket(configValue.CHARACTER_URL);
   clientCharacter.on('open', function () {
     console.log('Yukari Charector is ready');
   });
@@ -16,6 +10,14 @@ exports.startCharacter = () => {
   return clientCharacter;
 };
 
+exports.handleMessage = (discord) => {
+  if (!clientCharacter) throw new Error(`character did not start yet`);
+  clientCharacter.on('message', function (data) {
+    discord.sendMessage(data);
+  });
+};
+
 exports.sendMessage = (message) => {
+  if (!clientCharacter) throw new Error(`character did not start yet`);
   clientCharacter.send(message);
 };

@@ -1,0 +1,12 @@
+services:
+  web:
+    container_name: charector-ai-discord-bot
+    build: .
+    ports:
+      - ":8080"
+    networks:
+      - cbcharactoraimessager_default
+
+networks:
+  cbcharactoraimessager_default:
+    external: true 
