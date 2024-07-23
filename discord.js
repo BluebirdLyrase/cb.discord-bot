@@ -26,7 +26,7 @@ exports.handleMessage = (character) =>
     if (!bestWaifuMentioned) {
       return;
     }
-    const messageID = message.channel.id;
+    const channelID = message.channel.id;
     character.sendMessage(message.content); //TODO send messageID to character for her to response to the right channel
   });
 
