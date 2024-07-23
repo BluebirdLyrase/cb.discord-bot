@@ -27,11 +27,11 @@ exports.handleMessage = (character) =>
       return;
     }
     const channelID = message.channel.id;
-    character.sendMessage(message.content); //TODO send messageID to character for her to response to the right channel
+    character.sendMessage(message.content, channelID); //TODO send messageID to character for her to response to the right channel
   });
 
 exports.sendMessage = (message, channelID) => {
-  //TODO add channelID as a respond to message
-  // if (!channelID) return;
-  clientDiscord.channels.cache.get('894634396714434625').send(message);
+  console.log('DISCORD message:', message, ' channelID:', channelID);
+  if (!channelID) return;
+  clientDiscord.channels.cache.get(channelID).send(message);
 };
